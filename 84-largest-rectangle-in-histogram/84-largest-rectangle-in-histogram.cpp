@@ -18,7 +18,10 @@ public:
             s.push(make_pair(arr[i], i));
         }
 
-        s = stack<pair<int, int>>();
+        while(!s.empty()){
+            s.pop();
+        }
+
         for(int i = n-1;i>=0;i--){
             while(!s.empty()){
                 if(s.top().first < arr[i]){
