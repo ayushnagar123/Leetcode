@@ -2,22 +2,12 @@ class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
         map<int, int> m;
-        vector<int> ans;
-        int i = 0;
-        for (auto num : nums){
-            if(m.find(target - num)!=m.end()){
-                ans.push_back(m[target - num]);
-                ans.push_back(i);
-                break;
+        for(int i=0;i<nums.size(); i++){
+            if(m.find(target - nums[i]) != m.end()){
+                return {m[target - nums[i]], i};
             }
-            else {
-                m[num] = i;
-            }
-            i++;
+            m[nums[i]] = i;
         }
-        return ans;
+        return {-1, -1};
     }
 };
-
-// Runtime: 12 ms, faster than 77.71% of C++ online submissions for Two Sum.
-// Memory Usage: 11.2 MB, less than 22.66% of C++ online submissions for Two Sum.
