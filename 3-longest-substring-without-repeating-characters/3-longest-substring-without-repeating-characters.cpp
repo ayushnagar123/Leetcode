@@ -1,26 +1,35 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        set<char> k;
-        queue<char> q;
-        int ans = 0;
-        for(auto c: s){
-            if(k.find(c)!=k.end()){
-                while(k.size()!=0 && q.front()!=c){
-                    k.erase(q.front());
-                    q.pop();
+        int i = 0;
+        int j = 0;
+        map<char, int> m;
+        int n = s.size();
+        int ans = 0, ws = 0;
+        while(j<n){
+            m[s[j]]++;
+            ws = j - i + 1;
+            if(m.size() == ws){
+                if(ans<ws){
+                    ans = m.size();
                 }
-                q.pop();
             }
-            k.insert(c);
-            q.push(c);
-            if(ans < q.size()){
-                ans = q.size();
+            else if(m.size() < ws) {
+                while(m.size() < ws and i!=j) {
+                    m[s[i]]--;
+                    if(m[s[i]]==0){
+                        m.erase(s[i]);
+                    }
+                    i++;
+                    ws = j - i + 1;
+                }
+                
             }
+            j++;
+        }
+        if(ans < m.size()){
+            ans = m.size();
         }
         return ans;
     }
 };
-
-// Runtime: 20 ms, faster than 51.35% of C++ online submissions for Longest Substring Without Repeating Characters.
-// Memory Usage: 11 MB, less than 19.73% of C++ online submissions for Longest Substring Without Repeating Characters.
