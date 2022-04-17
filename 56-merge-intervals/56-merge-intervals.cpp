@@ -1,30 +1,16 @@
 class Solution {
 public:
-    static bool compare(const vector<int> &v1, const vector<int> &v2){
-        if(v1[0] < v2[0]){
-            return true;
-        }
-        if(v1[0] > v2[0]){
-            return false;
-        }
-        if(v1[1] < v2[1]){
-            return true;
-        }
-        return false;
-    }
     
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        sort(intervals.begin(), intervals.end());
         vector<vector<int>> ans;
-        int ans_index = 0;
-        sort(intervals.begin(), intervals.end(), compare);
         ans.push_back(intervals[0]);
-        for(auto interval: intervals){
-            if(ans[ans_index][1] >= interval[0]){
-                ans[ans_index][1] = max(interval[1], ans[ans_index][1]);
-            }
-            else{
-                ans_index++;
-                ans.push_back(interval);
+        for(long long i=1;i<intervals.size();i++) {
+            cout<<intervals[i][0]<<" "<<intervals[i][1]<<endl;
+            if(ans[ans.size() - 1][1] >= intervals[i][0]) {
+                ans[ans.size() - 1][1] = max(intervals[i][1], ans[ans.size() - 1][1]);
+            } else {
+                ans.push_back(intervals[i]);
             }
         }
         return ans;
