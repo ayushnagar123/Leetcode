@@ -1,40 +1,45 @@
 class Solution {
 public:
-    vector<int> findAnagrams(string s, string pat) {
-        int i = 0, j = 0;
+    vector<int> findAnagrams(string s, string p) {
         vector<int> ans;
-        int n = s.size();
-        int k = pat.size();
-        map<char,int> m;
-
-        for(auto ch: pat) {
-            m[ch]++;
+        map<char, int> m;
+        for(char c: p){
+            m[c]++;
         }
-
         int count = m.size();
-
-        while(j < n) {
-            char ch = s[j];
-            if(m.find(ch) != m.end()){
-                m[ch]--;
-                if(m[ch]==0){
-                    count--;
+        int i = 0, j = 0;
+        int n = s.size();
+        int k = p.size();
+        while(j<n) {
+            char c = s[j];
+            if(j<k){
+                if(m.find(c)!=m.end()){
+                    m[c]--;
+                    if(m[c]==0){
+                        count--;
+                    }
+                    if(count==0){
+                        ans.push_back(i);
+                    }
                 }
-            }
-            if(j < k){
-
             }
             else {
-                if(m.find(s[i]) != m.end()){
-                    if(m[s[i]] == 0){
+                if(m.find(s[i])!=m.end()){
+                    m[s[i]]++;
+                    if(m[s[i]]==1){
                         count++;
                     }
-                    m[s[i]]++;
                 }
                 i++;
-            }
-            if(count == 0){
-                ans.push_back(i);
+                if(m.find(c)!=m.end()){
+                    m[c]--;
+                    if(m[c]==0){
+                        count--;
+                    }
+                }
+                if(count==0){
+                    ans.push_back(i);
+                }
             }
             j++;
         }
